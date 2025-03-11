@@ -6,11 +6,17 @@ from sqlalchemy.ext.hybrid import hybrid_property
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
-    serialize_rules=()
+    serialize_rules=(
+        "-carts.user",
+        "-carts.foods",
+        "-carts.cart_foods"
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Integer, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
+
+    carts = db.relationship("Cart", back_populates="user", cascade="all, delete-orphan")
 
     @validates("email")
     def validate_email(self, key, email):

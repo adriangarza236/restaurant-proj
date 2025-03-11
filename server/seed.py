@@ -29,8 +29,8 @@ with app.app_context():
     db.session.commit()
 
     print("Creating Carts...")
-    kirby_cart = Cart(total_price=25.98, payment_status=False)
-    rocco_cart = Cart(total_price=24.98, payment_status=False)
+    kirby_cart = Cart(total_price=25.98, payment_status=False, user_id=kirby.id)
+    rocco_cart = Cart(total_price=24.98, payment_status=False, user_id=rocco.id)
 
     db.session.add_all([kirby_cart, rocco_cart])
     db.session.commit()
