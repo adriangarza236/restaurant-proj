@@ -50,6 +50,13 @@ function App() {
     const updatedFood = [...cartFoods, data]
     setCartFoods(updatedFood)
   }
+
+  //Delete CartFood
+  const deleteCartFood = (cartFood) =>  {
+      const updatedCartFoods = cartFoods.filter(cf => cf.id != cartFood.id)
+      setCartFoods(updatedCartFoods)
+  }
+
   //Login
   const login_user = user => {
     setCurrentUser(user)
@@ -68,7 +75,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu foods={foods} loggedIn={loggedIn} addCartFood={addCartFood} currentUser={currentUser} />} />
-        <Route path="/cart" element={<Cart loggedIn={loggedIn} currentUser={currentUser} cartFoods={cartFoods}/>} />
+        <Route path="/cart" element={<Cart deleteCartFood={deleteCartFood} loggedIn={loggedIn} currentUser={currentUser} cartFoods={cartFoods}/>} />
         <Route path="/signup" element={<Signup login_user={login_user} loggedIn={loggedIn} />} />
         <Route path="/login" element={<Login login_user={login_user} loggedIn={loggedIn} />} />
       </Routes>

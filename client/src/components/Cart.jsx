@@ -1,10 +1,10 @@
 import React from "react"
 import CartFoodCards from "./CartFoodCards"
 
-function Cart({ cartFoods, currentUser, loggedIn }) {
+function Cart({ cartFoods, currentUser, loggedIn, deleteCartFood }) {
 
     const filteredCartFoods = cartFoods.filter(cartFood => cartFood.cart.user_id === currentUser.id);
-    const cartFoodCards = filteredCartFoods.map((cartFood) => <CartFoodCards key={cartFood.id} cartFood={cartFood} currentUser={currentUser} />)
+    const cartFoodCards = filteredCartFoods.map((cartFood) => <CartFoodCards key={cartFood.id} cartFood={cartFood} deleteCartFood={deleteCartFood} />)
     return(
         <div>
             <h1>Cart</h1>
