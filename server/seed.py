@@ -21,9 +21,9 @@ with app.app_context():
     db.session.commit()
 
     print("Creating Foods...")
-    lasagna = Food(name="Lasagna", price="13.99", image="https://www.google.com/imgres?q=lasagna&imgurl=https%3A%2F%2Fcafedelites.com%2Fwp-content%2Fuploads%2F2018%2F01%2FMamas-Best-Lasagna-IMAGE-43.jpg&imgrefurl=https%3A%2F%2Fcafedelites.com%2Fbest-lasagna%2F&docid=W_2VVXyj3R5uFM&tbnid=htXMLTWexwS5YM&vet=12ahUKEwi6o7SahYCMAxWgGtAFHRyiE7AQM3oECH8QAA..i&w=1600&h=2400&hcb=2&ved=2ahUKEwi6o7SahYCMAxWgGtAFHRyiE7AQM3oECH8QAA")
-    spaghetti = Food(name="Sphagetti", price="10.99", image="https://www.google.com/imgres?q=spaghetti&imgurl=https%3A%2F%2Fwww.onceuponachef.com%2Fimages%2F2019%2F09%2FSpaghetti-and-Meatballs-1200x1554.jpg&imgrefurl=https%3A%2F%2Fwww.onceuponachef.com%2Frecipes%2Fspaghetti-and-meatballs.html&docid=hleCPKTl9BJVnM&tbnid=35vJPgqKK0E2bM&vet=12ahUKEwiMlsTUhYCMAxUNMtAFHSTXBnsQM3oECBcQAA..i&w=1200&h=1554&hcb=2&ved=2ahUKEwiMlsTUhYCMAxUNMtAFHSTXBnsQM3oECBcQAA")
-    ravioli = Food(name="Ravioli", price="11.99", image="https://www.google.com/imgres?q=ravioli&imgurl=https%3A%2F%2Fwww.thecountrycook.net%2Fwp-content%2Fuploads%2F2012%2F06%2Fthumbnail-Baked-Ravioli-Casserole.png&imgrefurl=https%3A%2F%2Fwww.thecountrycook.net%2Fravioli-casserole%2F&docid=GP3HvnkyVoPx8M&tbnid=5E7UEV5mi2nkUM&vet=12ahUKEwiz9vn6hYCMAxXk8MkDHR3RClsQM3oECFkQAA..i&w=800&h=800&hcb=2&ved=2ahUKEwiz9vn6hYCMAxXk8MkDHR3RClsQM3oECFkQAA")
+    lasagna = Food(name="Lasagna", price="13.99", image="https://thestayathomechef.com/wp-content/uploads/2024/03/Most-Amazing-Lasagna_Square-2.jpg")
+    spaghetti = Food(name="Sphagetti", price="10.99", image="https://www.onceuponachef.com/images/2019/09/Spaghetti-and-Meatballs-1200x1554.jpg")
+    ravioli = Food(name="Ravioli", price="11.99", image="https://www.thecountrycook.net/wp-content/uploads/2012/06/thumbnail-Baked-Ravioli-Casserole.png")
 
     db.session.add_all([lasagna, spaghetti, ravioli])
     db.session.commit()
