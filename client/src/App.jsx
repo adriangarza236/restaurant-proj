@@ -14,6 +14,7 @@ function App() {
   const [cartFoods, setCartFoods] = useState([])
   const [currentUser, setCurrentUser] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
+  const [carts, setCarts] = useState(0)
 
 
   //Getting Food For Menu
@@ -28,6 +29,13 @@ function App() {
     fetch("/api/cart_foods")
       .then((response) => response.json())
       .then((data) => setCartFoods(data))
+  }, [])
+
+  //Getting Cart
+  useEffect(() => {
+    fetch("/api/carts")
+      .then((response) => response.json())
+      .then((data) => setCarts(data))
   }, [])
   
   //Checking Current User
@@ -57,6 +65,10 @@ function App() {
       setCartFoods(updatedCartFoods)
   }
 
+  const updateCart = (data) => {
+    const updatedCart = [...carts, data]
+    setCarts(updatedCart)
+  }
   //Login
   const login_user = user => {
     setCurrentUser(user)
@@ -75,7 +87,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu foods={foods} loggedIn={loggedIn} addCartFood={addCartFood} currentUser={currentUser} />} />
-        <Route path="/cart" element={<Cart deleteCartFood={deleteCartFood} loggedIn={loggedIn} currentUser={currentUser} cartFoods={cartFoods}/>} />
+        <Route path="/cart" element={<Cart updateCart={updateCart} deleteCartFood={deleteCartFood} loggedIn={loggedIn} currentUser={currentUser} cartFoods={cartFoods}/>} />
         <Route path="/signup" element={<Signup login_user={login_user} loggedIn={loggedIn} />} />
         <Route path="/login" element={<Login login_user={login_user} loggedIn={loggedIn} />} />
       </Routes>
