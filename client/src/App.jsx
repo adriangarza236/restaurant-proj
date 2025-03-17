@@ -6,6 +6,11 @@ import Menu from './components/Menu'
 import Cart from './components/Cart'
 import Signup from './components/Signup'
 import Login from './components/Login'
+import Checkout from './components/Checkout'
+import CheckoutLoading from './CheckoutLoading'
+import SuccessPay from './SuccessPay'
+import FailedPay from './FailedPay'
+
 
 function App() {
   //State
@@ -15,6 +20,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
   const [carts, setCarts] = useState(0)
+  const [cartStatus, setCartStatus] = useState("")
+
 
 
   //Getting Food For Menu
@@ -32,12 +39,15 @@ function App() {
   }, [])
 
   //Getting Cart
-  useEffect(() => {
-    fetch("/api/carts")
-      .then((response) => response.json())
-      .then((data) => setCarts(data))
-  }, [])
-  
+  if (currentUser){
+    useEffect(() => {
+      fetch("/api/carts")
+        .then((response) => response.json())
+        .then((data) => setCarts(data))
+    }, [])
+  }
+
+
   //Checking Current User
   useEffect(() => {
     async function check_current_user() {
@@ -65,6 +75,11 @@ function App() {
       setCartFoods(updatedCartFoods)
   }
 
+  const deleteAllCartFood = () => {
+    const updatedCartFoods = cartFoods.filter(cartFood => cartFood.cart.user_id !== currentUser.id)
+    setCartFoods(updatedCartFoods)
+  }
+
   const updateCart = (data) => {
     const updatedCart = [...carts, data]
     setCarts(updatedCart)
@@ -81,15 +96,20 @@ function App() {
     setLoggedIn(false)
   }
 
+ 
   return (
     <>
       <Navbar loggedIn={loggedIn} currentUser={currentUser} logout_user={logout_user}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu foods={foods} loggedIn={loggedIn} addCartFood={addCartFood} currentUser={currentUser} />} />
-        <Route path="/cart" element={<Cart updateCart={updateCart} deleteCartFood={deleteCartFood} loggedIn={loggedIn} currentUser={currentUser} cartFoods={cartFoods}/>} />
+        <Route path="/cart" element={<Cart cartFoods={cartFoods} currentUser={currentUser} updateCart={updateCart} deleteCartFood={deleteCartFood} loggedIn={loggedIn} />} />
         <Route path="/signup" element={<Signup login_user={login_user} loggedIn={loggedIn} />} />
         <Route path="/login" element={<Login login_user={login_user} loggedIn={loggedIn} />} />
+        <Route path="/checkout" element={<Checkout currentUser={currentUser}/>} />
+        <Route path="/checkout-loading" element={<CheckoutLoading />} />
+        <Route path="/success-pay" element={<SuccessPay deleteAllCartFood={deleteAllCartFood} cartFoods={cartFoods} currentUser={currentUser}/>} />
+        <Route path="/failed-pay" element={<FailedPay />} />
       </Routes>
     </>
   )

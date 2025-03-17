@@ -18,3 +18,4 @@ from routes.users import *
 from routes.carts import *
 from routes.foods import *
 from routes.cart_foods import *
+from routes.checkout import *
