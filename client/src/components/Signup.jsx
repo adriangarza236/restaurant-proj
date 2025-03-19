@@ -1,12 +1,18 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { useNavigate } from "react-router-dom"
+import { CartsContext } from "../context/CartsContext"
+import { UsersContext } from "../context/UsersContext"
 
-function Signup({ login_user, loggedIn }) {
+const Signup = () => {
+
+    const { loggedIn, login_user } = useContext(UsersContext)
     
     //define navigate
     const navigate = useNavigate()
+
+    const { createCart } = useContext(CartsContext)
 
     //navigate after signup
     useEffect(() => {
@@ -28,21 +34,20 @@ function Signup({ login_user, loggedIn }) {
     })
 
     //handle creating a user
-    const handleSubmit = values => {
+    const handleSubmit = async values => {
         const options ={
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values)
         }
-        fetch("api/signup", options)
-            .then(resp => {
-                if(resp.status === 201) {
-                    resp.json().then(data => login_user(data))
-                } else {
-                    resp.json().then(error => console.log(error))
-                }
-            })
-    }
+        const resp = await fetch("api/signup", options)
+        if(resp.status === 201) {
+            const user = await resp.json()
+            login_user(user)
+            createCart(user.id)
+        } 
+  
+}
 
     //defining formik
     const formik = useFormik({

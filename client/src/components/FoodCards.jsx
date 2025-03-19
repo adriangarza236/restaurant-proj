@@ -1,7 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
+import { UsersContext } from "../context/UsersContext"
+import { CartFoodsContext } from "../context/CartFoodsContext"
 
 
-function FoodCards({ food , loggedIn, addCartFood, currentUser }) {
+function FoodCards({ food, currentUser }) {
+
+    const { loggedIn } = useContext(UsersContext)
+    const { addCartFood } = useContext(CartFoodsContext)
 
     // create a CartFood by using selected food
     const handleAddFood = (e) => {

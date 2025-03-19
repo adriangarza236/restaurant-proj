@@ -1,9 +1,16 @@
-import React from "react"
+import React, { useContext } from "react"
 import FoodCards from "./FoodCards"
+import { FoodsContext } from "../context/FoodsContext"
+import { UsersContext } from "../context/UsersContext"
 
-function Menu({ foods, loggedIn, addCartFood, currentUser }) {
+
+function Menu() {
+
+    const { currentUser } = useContext(UsersContext)
+    const { foods } = useContext(FoodsContext)
     
-    const foodCards = foods.map((food) => <FoodCards key={food.id} food={food} loggedIn={loggedIn} currentUser={currentUser} addCartFood={addCartFood}/>)
+    //iterating through foods to make foodCards
+    const foodCards = foods.map((food) => <FoodCards key={food.id} food={food} currentUser={currentUser}/>)
     
     return(
         <>

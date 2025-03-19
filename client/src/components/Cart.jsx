@@ -1,19 +1,29 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import React from "react"
 import CartFoodCards from "./CartFoodCards"
 import { useNavigate } from "react-router-dom";
+import { CartsContext } from "../context/CartsContext";
+import { UsersContext } from "../context/UsersContext";
+import { CartFoodsContext } from "../context/CartFoodsContext";
 
-function Cart({ currentUser, loggedIn, deleteCartFood, updateCart, cartFoods }) {
+function Cart() {
 
+    
     //define navigate 
     const navigate = useNavigate()
+    
+    const { updateCart } = useContext(CartsContext)
+    const { currentUser, loggedIn } = useContext(UsersContext)
+    const { cartFoods } = useContext(CartFoodsContext)
+    console.log("CurrentUser:", {currentUser})
+    console.log("cartFoods", {cartFoods})
 
     //filtering through cartFoods to get the cartFoods that belong to currentUser
     const filteredCartFoods = cartFoods.filter(cartFood => cartFood.cart.user_id === currentUser.id)
 
 
     //passing cartFood info to indiviual cards
-    const cartFoodCards = filteredCartFoods.map((cartFood) => <CartFoodCards key={cartFood.id} cartFood={cartFood} deleteCartFood={deleteCartFood} />)
+    const cartFoodCards = filteredCartFoods.map((cartFood) => <CartFoodCards key={cartFood.id} cartFood={cartFood} />)
 
     //grabbing all the prices from cartFoods
     const prices = filteredCartFoods.map((cartFood) => cartFood.food.price)

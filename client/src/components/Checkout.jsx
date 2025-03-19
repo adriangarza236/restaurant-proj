@@ -3,17 +3,21 @@ import {
     EmbeddedCheckoutProvider,
     EmbeddedCheckout
 } from '@stripe/react-stripe-js'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
+import { UsersContext } from '../context/UsersContext'
 
 
-const stripePromise = loadStripe('pk_test_51R0ALmId7om5ef7SdTG0uAeU76deYhRnK8tECp0ulQJZE4OmDhutH59HVe1NLMQJWxnLHckaHZB4wJPQgyJYbGp6003H0055NG')
+const stripePromise = loadStripe('pk_test_51R4V03RKH3DomtL4ocoPofbw86GVDd1KO4lnZofWmZ7t2CeFmougMNkBHlIwQPjT2HoQUW0XyQI5G0Ktcbev5sEF00RI8qLPM8')
 
-const Checkout = ({ currentUser }) => {
+const Checkout = () => {
 
+    const { currentUser } = useContext(UsersContext)
+
+    //grabbing cart id if current user exists
     const cart_id = currentUser?.carts[0].id
 
 
-
+    //Creating a checkout session
     const fetchClientSecret = useCallback(async () => {
         const response = await fetch("/api/create-checkout-session", {
             method: "POST",

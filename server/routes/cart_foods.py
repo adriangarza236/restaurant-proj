@@ -25,6 +25,8 @@ def cart_foods():
 @app.route("/api/cart_food/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def cart_food(id):
     cf = CartFood.query.filter(CartFood.id == id).first()
+    if not cf:
+        return make_response({"error": "CartFood not found"}, 404)
     if request.method == "GET":
         return make_response(
             cf.to_dict(),

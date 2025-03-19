@@ -1,6 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
+import { CartFoodsContext } from "../context/CartFoodsContext"
 
-function CartFoodCards({ cartFood, deleteCartFood }) {
+function CartFoodCards({ cartFood }) {
+
+    const { deleteCartFood } = useContext(CartFoodsContext)
 
     //remove cartFood from db
     const handleRemove = (e, cartFood) => {

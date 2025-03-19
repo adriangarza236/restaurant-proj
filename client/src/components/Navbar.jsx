@@ -1,8 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import { UsersContext } from "../context/UsersContext"
 
-const Navbar = ({ loggedIn, logout_user }) => {
+const Navbar = () => {
+
+    const { loggedIn, logout_user } = useContext(UsersContext)
+    
     //define navigate
     const navigate = useNavigate()
 
@@ -12,8 +16,8 @@ const Navbar = ({ loggedIn, logout_user }) => {
 
         fetch("/api/logout",
             {method: "DELETE"})
-            .then(resp => logout_user())
-            navigate('/')
+            .then(() => logout_user())
+            .then(() => navigate('/'))
     }
 
     return (

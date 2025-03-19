@@ -3,8 +3,12 @@ from config import app, db
 import stripe
 import os
 from models.cart import Cart
+from dotenv import load_dotenv
 
-stripe.api_key = 'sk_test_51R0ALmId7om5ef7S1YkvioJi9i5SEVJLGg9S5aIg3cvfGSJvU0vqrfEg1wpQpYNAnktWdVzZL9zGnqMfl21GSl5400EQX2ESk9'
+
+load_dotenv()
+
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 @app.route("/api/create-checkout-session", methods=["POST"])
 def create_checkout_session():
@@ -27,15 +31,11 @@ def create_checkout_session():
         mode = 'payment',
         ui_mode = 'embedded',
         return_url = 'http://localhost:5173/checkout-loading?session_id={CHECKOUT_SESSION_ID}',
-        # success_url = ' http://localhost:5173/' + '?success=true',
-        # cancel_url = ' http://localhost:5173/' + '?canceled=true',
+     
     )
 
     return jsonify(clientSecret=session.client_secret, session=session)
-    # except Exception as e:
-    #     return str(e)
-        
-    # return redirect(checkout_session.url, code=303)
+
 
 @app.route('/api/session-status', methods=["GET"])
 def session_status():
