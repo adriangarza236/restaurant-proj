@@ -29,17 +29,17 @@ with app.app_context():
     db.session.commit()
 
     print("Creating Carts...")
-    kirby_cart = Cart(total_price=25.98, payment_status=False, user_id=kirby.id)
-    rocco_cart = Cart(total_price=24.98, payment_status=False, user_id=rocco.id)
+    kirby_cart = Cart(total_price=25.98, user_id=kirby.id)
+    rocco_cart = Cart(total_price=24.98, user_id=rocco.id)
 
     db.session.add_all([kirby_cart, rocco_cart])
     db.session.commit()
 
     print("Creating Cart Foods...")
-    kirb_food_1 = CartFood(food_id=lasagna.id, cart_id=kirby_cart.id)
-    kirb_food_2 = CartFood(food_id=ravioli.id, cart_id=kirby_cart.id)
-    roc_food_1 = CartFood(food_id=lasagna.id, cart_id=rocco_cart.id)
-    roc_food_2 = CartFood(food_id=spaghetti.id, cart_id=rocco_cart.id)
+    kirb_food_1 = CartFood(quantity=1, food_id=lasagna.id, cart_id=kirby_cart.id)
+    kirb_food_2 = CartFood(quantity=3, food_id=ravioli.id, cart_id=kirby_cart.id)
+    roc_food_1 = CartFood(quantity=2, food_id=lasagna.id, cart_id=rocco_cart.id)
+    roc_food_2 = CartFood(quantity=1, food_id=spaghetti.id, cart_id=rocco_cart.id)
 
     db.session.add_all([kirb_food_1, kirb_food_2, roc_food_1, roc_food_2])
     db.session.commit()

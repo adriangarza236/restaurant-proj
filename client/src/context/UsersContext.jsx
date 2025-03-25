@@ -32,7 +32,7 @@ const UsersProvider = ({ children }) => {
         setLoggedIn(false)
     }
 
-    return <UsersContext.Provider value={{ currentUser, loggedIn, login_user, logout_user }}>{children}</UsersContext.Provider>
+    return <UsersContext.Provider value={{ currentUser, setCurrentUser, loggedIn, login_user, logout_user }}>{children}</UsersContext.Provider>
     
 }
 export { UsersContext, UsersProvider }

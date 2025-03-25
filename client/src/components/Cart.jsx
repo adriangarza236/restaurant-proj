@@ -6,7 +6,7 @@ import { CartsContext } from "../context/CartsContext";
 import { UsersContext } from "../context/UsersContext";
 import { CartFoodsContext } from "../context/CartFoodsContext";
 
-function Cart() {
+const Cart = () => {
 
     
     //define navigate 
@@ -14,20 +14,40 @@ function Cart() {
     
     const { updateCart } = useContext(CartsContext)
     const { currentUser, loggedIn } = useContext(UsersContext)
-    const { cartFoods } = useContext(CartFoodsContext)
-    console.log("CurrentUser:", {currentUser})
-    console.log("cartFoods", {cartFoods})
-
-    //filtering through cartFoods to get the cartFoods that belong to currentUser
-    const filteredCartFoods = cartFoods.filter(cartFood => cartFood.cart.user_id === currentUser.id)
-
-
-    //passing cartFood info to indiviual cards
-    const cartFoodCards = filteredCartFoods.map((cartFood) => <CartFoodCards key={cartFood.id} cartFood={cartFood} />)
-
-    //grabbing all the prices from cartFoods
-    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price)
+    const { cartFoods, updateCartFood } = useContext(CartFoodsContext)
     
+    //filtering through cartFoods to get the cartFoods that belong to currentUser
+    const filteredCartFoods = cartFoods.filter(cartFood => cartFood.cart && currentUser && cartFood.cart.user_id === currentUser.id)  
+    //updating quantities in the backend
+    const updateQuantities = (groupedCartFoods) => {
+        if (groupedCartFoods.length > 0) {
+            groupedCartFoods.forEach(cartFood => {
+                updateCartFood(cartFood)
+            })
+        }
+    }
+
+    //grouping by id and summing quantities if already in cart
+    const groupedCartFoods = filteredCartFoods.reduce((accumulator, cartFood) => {
+        const existingCartFood = accumulator.find(item => item.food_id === cartFood.food_id)
+        if (existingCartFood) {
+            existingCartFood.quantity += 1
+        } else {
+            accumulator.push({ ...cartFood })
+        }
+        return accumulator
+    }, [])
+    
+
+    
+    
+    //passing cartFood info to indiviual cards
+    const cartFoodCards = groupedCartFoods.map((cartFood) => <CartFoodCards key={cartFood.food_id} cartFood={cartFood} />)
+    
+    //grabbing all the prices from cartFoods
+    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price * cartFood.quantity)
+    
+
     //function to add prices
     function addPrices(array) {
         let sum = 0
@@ -51,14 +71,14 @@ function Cart() {
                 body: JSON.stringify({
                     "total_price": total
                 })
+            }
+            fetch("/api/cart/" + filteredCartFoods[0].cart_id, options)
+                .then(resp => resp.json())
+                .then(data => {
+                    updateCart(data)
+                })
         }
-        fetch("/api/cart/" + filteredCartFoods[0].cart_id, options)
-            .then(resp => resp.json())
-            .then(data => {
-                updateCart(data)
-            })
-    }
-}, [total])
+    }, [total])
 
     //navigate to checkout embedded form
     const handleCheckout = (e) => {
@@ -72,7 +92,7 @@ function Cart() {
             <h1>Cart</h1>
             {loggedIn ? cartFoodCards : <p>Loading...</p>}
             <h3>Total: {filteredCartFoods.length > 0 ? total : 0}</h3>
-            <button onClick={handleCheckout}>Checkout</button>
+            {total > 0 ? <button onClick={handleCheckout}>Checkout</button> : null}
         </div>
     )
 }

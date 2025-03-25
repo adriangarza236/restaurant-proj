@@ -5,7 +5,7 @@ import { UsersContext } from "../context/UsersContext"
 
 const Navbar = () => {
 
-    const { loggedIn, logout_user } = useContext(UsersContext)
+    const { loggedIn, logout_user, currentUser } = useContext(UsersContext)
     
     //define navigate
     const navigate = useNavigate()
@@ -28,6 +28,7 @@ const Navbar = () => {
             <>
                 <li><Link to="#" onClick={handleClick}>Logout</Link></li>
                 <li><Link to="/cart">Cart</Link></li>
+                <h3>{currentUser.email} is logged in</h3>
             </>
         ) : (
             <>

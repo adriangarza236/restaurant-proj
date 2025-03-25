@@ -12,9 +12,10 @@ def cart_foods():
         )
     elif request.method == "POST":
         data = request.get_json()
+        quantity = data.get('quantity')
         cart_id = data.get('cart_id')
         food_id = data.get('food_id')
-        cf = CartFood(cart_id=cart_id, food_id=food_id)
+        cf = CartFood(quantity=quantity, cart_id=cart_id, food_id=food_id)
         db.session.add(cf)
         db.session.commit()
         return make_response(

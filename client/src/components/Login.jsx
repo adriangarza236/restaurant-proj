@@ -40,9 +40,7 @@ const Login = () => {
             .then(resp => {
                 if(resp.status === 200) {
                     resp.json().then(data => login_user(data))
-                    } else {
-                    resp.json().then(error => console.log(error))
-                }
+                    } 
             })
     }
 

@@ -44,7 +44,7 @@ const Signup = () => {
         if(resp.status === 201) {
             const user = await resp.json()
             login_user(user)
-            createCart(user.id)
+            await createCart(user.id)
         } 
   
 }

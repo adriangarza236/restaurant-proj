@@ -5,6 +5,7 @@ class CartFood(db.Model, SerializerMixin):
     __tablename__ = "cart_foods"
 
     id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer)
     cart_id = db.Column(db.Integer, db.ForeignKey("carts.id"))
     food_id = db.Column(db.Integer, db.ForeignKey("foods.id"))
 

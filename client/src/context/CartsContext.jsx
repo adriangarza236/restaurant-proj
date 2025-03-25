@@ -27,7 +27,6 @@ const CartsProvider = ({ children }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             "total_price": 0,
-            "payment_status": 0,
             "user_id": userId
         })
         }

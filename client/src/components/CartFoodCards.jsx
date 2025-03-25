@@ -17,8 +17,9 @@ function CartFoodCards({ cartFood }) {
     return (
         <>
             <img src={cartFood.food.image} alt="Food Image" />
-            <h2>{cartFood.food.name}</h2>
-            <h2>{cartFood.food.price}</h2>
+            <h1>{cartFood.food.name}</h1>
+            <h2>Price: {cartFood.food.price}</h2>
+            <h3>Quantity: {cartFood.quantity}</h3>
             <button onClick={(e) => handleRemove(e, cartFood)}>Remove from Cart</button>
         </>
     )
