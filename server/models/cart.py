@@ -13,7 +13,7 @@ class Cart(db.Model, SerializerMixin):
     )
 
     id = db.Column(db.Integer, primary_key=True)
-    total_price = db.Column(db.Float)
+    total_price = db.Column(db.Numeric(precision=max, scale=2))
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     user = db.relationship("User", back_populates="carts")

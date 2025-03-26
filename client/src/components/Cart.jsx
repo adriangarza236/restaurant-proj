@@ -91,7 +91,7 @@ const Cart = () => {
         <div>
             <h1>Cart</h1>
             {loggedIn ? cartFoodCards : <p>Loading...</p>}
-            <h3>Total: {filteredCartFoods.length > 0 ? total : 0}</h3>
+            <h3>Total: {filteredCartFoods.length > 0 ? total.toFixed(2) : 0.00}</h3>
             {total > 0 ? <button onClick={handleCheckout}>Checkout</button> : null}
         </div>
     )
