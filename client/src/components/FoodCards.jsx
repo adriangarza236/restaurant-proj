@@ -1,69 +1,117 @@
-import React, { useContext } from "react"
-import { UsersContext } from "../context/UsersContext"
-import { CartFoodsContext } from "../context/CartFoodsContext"
+import React, { useContext } from "react";
+import { UsersContext } from "../context/UsersContext";
+import { CartFoodsContext } from "../context/CartFoodsContext";
+import { Card, CardMedia, CardContent, Typography, Button, Box } from "@mui/material";
 
 const FoodCards = ({ food, currentUser }) => {
+    const { loggedIn } = useContext(UsersContext);
+    const { addToCart, updateCartFood, cartFoods } = useContext(CartFoodsContext);
 
-    const { loggedIn } = useContext(UsersContext)
-    const { addToCart, updateCartFood, cartFoods } = useContext(CartFoodsContext)
-    
-    // const existingCartFood = cartFoods.find(cartFood => cartFood.food_id === food.id && cartFood.cart_id === currentUser.id)
-    const existingCartFood = currentUser 
-    ? cartFoods.find(cartFood => cartFood.food_id === food.id && cartFood.cart_id === currentUser.id)
-    : null;
-    // create a CartFood by using selected food
+    const existingCartFood = currentUser
+        ? cartFoods.find(cartFood => cartFood.food_id === food.id && cartFood.cart_id === currentUser.id)
+        : null;
+
     const handleAddFood = (e) => {
-        e.preventDefault()
-        
+        e.preventDefault();
 
         if (existingCartFood) {
-            // Update the quantity of the existing cartFood
             const options = {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json" 
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "quantity": existingCartFood.quantity + 1
-                })
-            }
+                    quantity: existingCartFood.quantity + 1,
+                }),
+            };
 
             fetch(`/api/cart_food/${existingCartFood.id}`, options)
                 .then(resp => resp.json())
                 .then(data => {
-                    updateCartFood(data)
-                })
+                    updateCartFood(data);
+                });
         } else {
-            // Create a new cartFood
             const options = {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json" 
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "food_id": food.id,
-                    "cart_id": currentUser.id,
-                    "quantity": 1
-                })
-            }
+                    food_id: food.id,
+                    cart_id: currentUser.id,
+                    quantity: 1,
+                }),
+            };
 
             fetch("/api/cart_foods", options)
                 .then(resp => resp.json())
                 .then(data => {
-                    addToCart(data)
-                })
+                    addToCart(data);
+                });
         }
-    }
+    };
 
-    return(
-        <div>
-            <h2>{food.name}</h2>
-            <h4>{food.price}</h4>
-            <img src={food.image} alt={food.name} />
-            {loggedIn ? <button onClick={handleAddFood}>
-                {existingCartFood ? `In Cart (${existingCartFood.quantity})` : 'Add to Cart'}</button> : null}
-        </div>
-    )
-}
+    return (
+        <Card
+            sx={{
+                maxWidth: 345,
+                margin: "1rem",
+                backgroundColor: "#f8f1e4",
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                borderRadius: "8px",
+            }}
+        >
+            <CardMedia
+                component="img"
+                height="200"
+                image={food.image}
+                alt={food.name}
+            />
+            <CardContent>
+                <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{
+                        fontFamily: "'Dancing Script', cursive",
+                        color: "#8b0000",
+                        textAlign: "center",
+                    }}
+                >
+                    {food.name}
+                </Typography>
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontFamily: "'Roboto', sans-serif",
+                        color: "#4b2c20",
+                        textAlign: "center",
+                    }}
+                >
+                    ${food.price}
+                </Typography>
+                {loggedIn && (
+                    <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
+                        <Button
+                            onClick={handleAddFood}
+                            variant="contained"
+                            sx={{
+                                backgroundColor: "#8b0000",
+                                color: "#f8f1e4",
+                                fontFamily: "'Dancing Script', cursive",
+                                "&:hover": {
+                                    backgroundColor: "#a30000",
+                                },
+                            }}
+                        >
+                            {existingCartFood
+                                ? `In Cart (${existingCartFood.quantity})`
+                                : "Add to Cart"}
+                        </Button>
+                    </Box>
+                )}
+            </CardContent>
+        </Card>
+    );
+};
 
-export default FoodCards
+export default FoodCards;

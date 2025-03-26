@@ -1,100 +1,136 @@
-import { useContext, useEffect } from "react";
-import React from "react"
-import CartFoodCards from "./CartFoodCards"
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CartFoodCards from "./CartFoodCards";
 import { CartsContext } from "../context/CartsContext";
 import { UsersContext } from "../context/UsersContext";
 import { CartFoodsContext } from "../context/CartFoodsContext";
+import { Container, Typography, Button, Box } from "@mui/material";
 
 const Cart = () => {
+    const navigate = useNavigate();
+    const { updateCart } = useContext(CartsContext);
+    const { currentUser, loggedIn } = useContext(UsersContext);
+    const { cartFoods, updateCartFood } = useContext(CartFoodsContext);
 
-    
-    //define navigate 
-    const navigate = useNavigate()
-    
-    const { updateCart } = useContext(CartsContext)
-    const { currentUser, loggedIn } = useContext(UsersContext)
-    const { cartFoods, updateCartFood } = useContext(CartFoodsContext)
-    
-    //filtering through cartFoods to get the cartFoods that belong to currentUser
-    const filteredCartFoods = cartFoods.filter(cartFood => cartFood.cart && currentUser && cartFood.cart.user_id === currentUser.id)  
-    //updating quantities in the backend
-    const updateQuantities = (groupedCartFoods) => {
-        if (groupedCartFoods.length > 0) {
-            groupedCartFoods.forEach(cartFood => {
-                updateCartFood(cartFood)
-            })
-        }
-    }
+    // Filter cartFoods for the current user
+    const filteredCartFoods = cartFoods.filter(
+        (cartFood) => cartFood.cart && currentUser && cartFood.cart.user_id === currentUser.id
+    );
 
-    //grouping by id and summing quantities if already in cart
+    // Group cartFoods by food_id and sum quantities
     const groupedCartFoods = filteredCartFoods.reduce((accumulator, cartFood) => {
-        const existingCartFood = accumulator.find(item => item.food_id === cartFood.food_id)
+        const existingCartFood = accumulator.find((item) => item.food_id === cartFood.food_id);
         if (existingCartFood) {
-            existingCartFood.quantity += 1
+            existingCartFood.quantity += 1;
         } else {
-            accumulator.push({ ...cartFood })
+            accumulator.push({ ...cartFood });
         }
-        return accumulator
-    }, [])
-    
+        return accumulator;
+    }, []);
 
-    
-    
-    //passing cartFood info to indiviual cards
-    const cartFoodCards = groupedCartFoods.map((cartFood) => <CartFoodCards key={cartFood.food_id} cartFood={cartFood} />)
-    
-    //grabbing all the prices from cartFoods
-    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price * cartFood.quantity)
-    
+    // Map cartFood info to individual cards
+    const cartFoodCards = groupedCartFoods.map((cartFood) => (
+        <CartFoodCards key={cartFood.food_id} cartFood={cartFood} />
+    ));
 
-    //function to add prices
-    function addPrices(array) {
-        let sum = 0
-        for (let i = 0; i < array.length; i++) {
-            sum += array[i]
-        }
-        return sum
-    }
+    // Calculate total price
+    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price * cartFood.quantity);
+    const total = prices.reduce((sum, price) => sum + price, 0);
 
-    //defining total from sum of prices
-    const total = addPrices(prices)
-    
-    //updating cart to show correct total
+    // Update cart total in the backend
     useEffect(() => {
         if (filteredCartFoods.length > 0) {
             const options = {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "total_price": total
-                })
-            }
+                    total_price: total,
+                }),
+            };
             fetch("/api/cart/" + filteredCartFoods[0].cart_id, options)
-                .then(resp => resp.json())
-                .then(data => {
-                    updateCart(data)
-                })
+                .then((resp) => resp.json())
+                .then((data) => {
+                    updateCart(data);
+                });
         }
-    }, [total])
+    }, [total]);
 
-    //navigate to checkout embedded form
+    // Navigate to checkout
     const handleCheckout = (e) => {
-        e.preventDefault()
-        navigate("/checkout")
-    }
-        
+        e.preventDefault();
+        navigate("/checkout");
+    };
 
-    return(
-        <div>
-            <h1>Cart</h1>
-            {loggedIn ? cartFoodCards : <p>Loading...</p>}
-            <h3>Total: {filteredCartFoods.length > 0 ? total.toFixed(2) : 0.00}</h3>
-            {total > 0 ? <button onClick={handleCheckout}>Checkout</button> : null}
-        </div>
-    )
-}
+    return (
+        <Container
+            sx={{
+                marginTop: "2rem",
+                backgroundColor: "#f8f1e4",
+                padding: "2rem",
+                borderRadius: "8px",
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+            }}
+        >
+            <Typography
+                variant="h4"
+                component="h1"
+                gutterBottom
+                sx={{
+                    fontFamily: "'Dancing Script', cursive",
+                    color: "#8b0000",
+                    textAlign: "center",
+                }}
+            >
+                Cart
+            </Typography>
+            {loggedIn ? (
+                cartFoodCards
+            ) : (
+                <Typography
+                    variant="body1"
+                    sx={{
+                        fontFamily: "'Roboto', sans-serif",
+                        color: "#4b2c20",
+                        textAlign: "center",
+                    }}
+                >
+                    Loading...
+                </Typography>
+            )}
+            <Typography
+                variant="h5"
+                sx={{
+                    fontFamily: "'Roboto', sans-serif",
+                    color: "#4b2c20",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                }}
+            >
+                Total: ${filteredCartFoods.length > 0 ? total.toFixed(2) : "0.00"}
+            </Typography>
+            {total > 0 && (
+                <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
+                    <Button
+                        onClick={handleCheckout}
+                        variant="contained"
+                        sx={{
+                            backgroundColor: "#8b0000",
+                            color: "#f8f1e4",
+                            fontFamily: "'Dancing Script', cursive",
+                            fontSize: "1.2rem",
+                            "&:hover": {
+                                backgroundColor: "#a30000",
+                            },
+                        }}
+                    >
+                        Checkout
+                    </Button>
+                </Box>
+            )}
+        </Container>
+    );
+};
 
-export default Cart
+export default Cart;

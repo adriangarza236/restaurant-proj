@@ -25,12 +25,16 @@ with app.app_context():
     spaghetti = Food(name="Sphagetti", price="10.99", image="https://www.onceuponachef.com/images/2019/09/Spaghetti-and-Meatballs-1200x1554.jpg")
     ravioli = Food(name="Ravioli", price="11.99", image="https://www.thecountrycook.net/wp-content/uploads/2012/06/thumbnail-Baked-Ravioli-Casserole.png")
     meatball = Food(name="Meatballs", price="8.99", image="https://www.flavcity.com/wp-content/uploads/2018/06/meatballs-tomato-sauce.jpg")
-    alfredo = Food(name="Chicken Alfredo", price="14.99" image="https://iwashyoudry.com/wp-content/uploads/2022/08/Chicken-Alfredo-Low-Res-21.jpg")
+    alfredo = Food(name="Chicken Alfredo", price="14.99", image="https://iwashyoudry.com/wp-content/uploads/2022/08/Chicken-Alfredo-Low-Res-21.jpg")
     scampi = Food(name="Shrimp Scampi", price = "14.99", image="https://www.savingdessert.com/wp-content/uploads/2019/03/Shrimp-Scampi-1.jpg")
-    
+    chicken = Food(name="Chicken Parmigiana", price = "13.99", image="https://www.allrecipes.com/thmb/NqzCcC9X9Eal2WMhnqtmTTpQQrU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8975-chicken-parmigiana-ddmfs-4448-4x3-beauty-0288bb95d4b643b79619b10059b4df55.jpg")
+    marsala = Food(name="Chicken Marsala", price="12.99", image="https://modernmealmakeover.com/wp-content/uploads/2021/02/IMG_0039-2.jpg")
+    ziti = Food(name="Baked Ziti", price="12.99", image="https://sugarspunrun.com/wp-content/uploads/2025/01/Baked-Ziti-Recipe-1-of-1-2.jpg")
+    shrimp = Food(name="Shrimp Carbonara", price="13.99", image="https://www.allrecipes.com/thmb/oiSmmvizuvo4TZJ_4lWa1CA5fEs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/5296156-shrimp-carbonara-Bren-4x3-1-0f1767cf78514e8ba1c7219729f4626a.jpg")
 
 
-    db.session.add_all([lasagna, spaghetti, ravioli])
+
+    db.session.add_all([lasagna, spaghetti, ravioli, meatball, alfredo, scampi, chicken, marsala, ziti, shrimp])
     db.session.commit()
 
     print("Creating Carts...")
