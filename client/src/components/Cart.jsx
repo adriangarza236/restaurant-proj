@@ -10,11 +10,11 @@ const Cart = () => {
     const navigate = useNavigate();
     const { updateCart } = useContext(CartsContext);
     const { currentUser, loggedIn } = useContext(UsersContext);
-    const { cartFoods, updateCartFood } = useContext(CartFoodsContext);
+    const { cartFoods } = useContext(CartFoodsContext);
 
     // Filter cartFoods for the current user
     const filteredCartFoods = cartFoods.filter(
-        (cartFood) => cartFood.cart && currentUser && cartFood.cart.user_id === currentUser.id
+        (cartFood) => currentUser && cartFood.cart.user_id === currentUser.id
     );
 
     // Group cartFoods by food_id and sum quantities
@@ -33,8 +33,8 @@ const Cart = () => {
         <CartFoodCards key={cartFood.food_id} cartFood={cartFood} />
     ));
 
-    // Calculate total price
-    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price * cartFood.quantity);
+    // Use quantity to calculate correct total price
+    const prices = filteredCartFoods.map((cartFood) => cartFood.food.price * cartFood.quantity)
     const total = prices.reduce((sum, price) => sum + price, 0);
 
     // Update cart total in the backend

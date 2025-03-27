@@ -8,6 +8,7 @@ function Menu() {
     const { currentUser } = useContext(UsersContext);
     const { foods } = useContext(FoodsContext);
 
+    //mapping over foods and passing over to foodcards 
     const foodCards = foods.map((food) => (
         <Grid item xs={12} sm={6} md={4} key={food.id}>
             <FoodCards food={food} currentUser={currentUser} />

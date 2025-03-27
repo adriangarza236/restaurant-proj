@@ -5,7 +5,7 @@ import { Card, CardMedia, CardContent, Typography, Button, Box } from "@mui/mate
 function CartFoodCards({ cartFood }) {
     const { deleteCartFood } = useContext(CartFoodsContext);
 
-    // Remove cartFood from db
+    // Remove cartFood from db.
     const handleRemove = (e, cartFood) => {
         e.preventDefault();
         if (cartFood) {

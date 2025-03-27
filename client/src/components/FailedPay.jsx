@@ -6,7 +6,7 @@ const FailedPay = () => {
     // Define navigate
     const navigate = useNavigate();
 
-    // Redirect to cart to attempt payment again
+    // Redirect to cart to attempt payment again.
     const handleClick = (e) => {
         e.preventDefault();
         navigate("/cart");

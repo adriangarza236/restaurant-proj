@@ -7,10 +7,12 @@ const FoodCards = ({ food, currentUser }) => {
     const { loggedIn } = useContext(UsersContext);
     const { addToCart, updateCartFood, cartFoods } = useContext(CartFoodsContext);
 
+    //defnining cartfoods that already exist in the users cart
     const existingCartFood = currentUser
         ? cartFoods.find(cartFood => cartFood.food_id === food.id && cartFood.cart_id === currentUser.id)
         : null;
 
+    //if a cartfood exists it will update the quantity if not it will create a new cartFood
     const handleAddFood = (e) => {
         e.preventDefault();
 
@@ -54,7 +56,8 @@ const FoodCards = ({ food, currentUser }) => {
     return (
         <Card
             sx={{
-                maxWidth: 345,
+                width: 345, // Fixed width
+                height: 450, // Fixed height
                 margin: "1rem",
                 backgroundColor: "#f8f1e4",
                 boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",

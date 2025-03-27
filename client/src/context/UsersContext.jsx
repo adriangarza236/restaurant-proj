@@ -7,7 +7,7 @@ const UsersProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 
-    //Checking Current User
+    //Checking Current User 
     useEffect(() => {
     async function checkCurrentUser() {
         const resp = await fetch("/api/check_current_user")

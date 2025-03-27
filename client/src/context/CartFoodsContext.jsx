@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import { UsersContext } from "./UsersContext";
+import { createContext, useState, useEffect } from "react";
+
 
 
 const CartFoodsContext = createContext({})
@@ -7,7 +7,6 @@ const CartFoodsContext = createContext({})
 const CartFoodsProvider = ({ children }) => {
     
     const [cartFoods, setCartFoods] = useState([])
-    const { currentUser } = useContext(UsersContext)
 
     //Getting CartFoods for Cart
     useEffect(() => {
@@ -15,12 +14,6 @@ const CartFoodsProvider = ({ children }) => {
         .then((response) => response.json())
         .then((data) => setCartFoods(data))
     }, [])
-
-    //Add Food to Cart
-    const addCartFood = (data) => {
-        const updatedFood = [...cartFoods, data]
-        setCartFoods(updatedFood)
-    }
 
     // Add Food to Cart
     const addToCart = (data) => {
@@ -30,7 +23,6 @@ const CartFoodsProvider = ({ children }) => {
 
     // Update CartFood
     const updateCartFood = (data) => {
-        console.log(data)
         const updatedCartFoods = cartFoods.map(cartFood => 
             cartFood.id === data.id ? { ...cartFood, ...data } : cartFood
         );
@@ -54,7 +46,7 @@ const CartFoodsProvider = ({ children }) => {
         })
     }
 
-    return <CartFoodsContext.Provider value={{cartFoods, updateCartFood, addToCart, addCartFood, deleteCartFood, deleteAllCartFood}}>{children}</CartFoodsContext.Provider>
+    return <CartFoodsContext.Provider value={{cartFoods, updateCartFood, addToCart, deleteCartFood, deleteAllCartFood}}>{children}</CartFoodsContext.Provider>
 
 }
 export { CartFoodsContext, CartFoodsProvider }

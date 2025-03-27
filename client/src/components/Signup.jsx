@@ -21,7 +21,7 @@ const Signup = () => {
         }
     }, [loggedIn]);
 
-    // Define initial values for formik
+    // Define initial values for formik 
     const initialValues = {
         email: "",
         password: "",

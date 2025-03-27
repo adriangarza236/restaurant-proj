@@ -7,7 +7,7 @@ const FoodsProvider = ({ children }) => {
 
         const [foods, setFoods] = useState([])
 
-        //Getting Food For Menu
+        //Getting Food For Menu 
         useEffect(() => {
             fetch("/api/foods")
             .then((response) => response.json())

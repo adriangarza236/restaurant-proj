@@ -9,7 +9,7 @@ const SuccessPay = () => {
     const { cartFoods, deleteAllCartFood } = useContext(CartFoodsContext);
     const navigate = useNavigate();
 
-    // Clear the user's cart after successful payment
+    // Clear the user's cart after successful payment 
     useEffect(() => {
         const userCartFoods = currentUser
             ? cartFoods.filter((cartFood) => cartFood.cart.user_id === currentUser.id)

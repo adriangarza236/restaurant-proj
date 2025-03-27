@@ -32,7 +32,7 @@ function Home() {
                         color: "#8b0000",
                     }}
                 >
-                    Welcome to Olive Lawn
+                    Welcome to Olive Lawn!
                 </Typography>
                 <Typography
                     variant="h5"
@@ -42,7 +42,7 @@ function Home() {
                         color: "#4b2c20",
                     }}
                 >
-                    Come and order some of your favorite Italian cuisines
+                    Come and order some of your favorite Italian cuisines.
                 </Typography>
             </Box>
         </Container>

@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, jsonify
+from flask import request, jsonify
 from config import app, db
 import stripe
 import os

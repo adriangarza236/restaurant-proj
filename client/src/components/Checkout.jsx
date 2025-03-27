@@ -15,6 +15,7 @@ const Checkout = () => {
 
     //grabbing cart id if current user exists
     const cart_id = currentUser.id
+    
     //Creating a checkout session
     const fetchClientSecret = useCallback(async () => {
         const response = await fetch("/api/create-checkout-session", {

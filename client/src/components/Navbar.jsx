@@ -10,7 +10,7 @@ const Navbar = () => {
     // Define navigate
     const navigate = useNavigate();
 
-    // Handle logging out via navbar
+    // Handle logging out via navbar 
     const handleClick = (event) => {
         event.preventDefault();
 

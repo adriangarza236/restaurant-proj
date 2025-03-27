@@ -37,7 +37,7 @@ const CartsProvider = ({ children }) => {
         })
     }
 
-    //update total price in cart
+    //update total price in cart 
     const updateCart = (data) => {
         const updatedCart = [...carts, data]
         setCarts(updatedCart)

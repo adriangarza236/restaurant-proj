@@ -8,7 +8,7 @@ import { Container, Typography, TextField, Button, Box } from "@mui/material";
 const Login = () => {
     const { login_user, loggedIn } = useContext(UsersContext);
 
-    // Define navigate
+    // Define navigate 
     const navigate = useNavigate();
 
     // Navigate after login
