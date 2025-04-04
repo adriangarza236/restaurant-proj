@@ -23,7 +23,13 @@ const Checkout = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ cart_id })
+            body: JSON.stringify({ 
+                cart_id,
+                currentUser: {
+                    email: currentUser.email,
+                    id: currentUser.id
+                }
+            })
         })
         const data = await response.json()
         return data.clientSecret

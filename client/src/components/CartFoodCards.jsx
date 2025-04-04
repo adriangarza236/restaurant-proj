@@ -3,14 +3,30 @@ import { CartFoodsContext } from "../context/CartFoodsContext";
 import { Card, CardMedia, CardContent, Typography, Button, Box } from "@mui/material";
 
 function CartFoodCards({ cartFood }) {
-    const { deleteCartFood } = useContext(CartFoodsContext);
+    const { deleteCartFood, updateCartFood } = useContext(CartFoodsContext);
 
     // Remove cartFood from db.
     const handleRemove = (e, cartFood) => {
         e.preventDefault();
-        if (cartFood) {
+        if (cartFood.quantity <= 1) {
             fetch("/api/cart_food/" + cartFood.id, { method: "DELETE" });
             deleteCartFood(cartFood);
+        } else {
+            const options = {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    quantity: cartFood.quantity - 1,
+                }),
+            };
+
+            fetch(`/api/cart_food/${cartFood.id}`, options)
+                .then(resp => resp.json())
+                .then(data => {
+                    updateCartFood(data);
+                });
         }
     };
 

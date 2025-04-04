@@ -22,7 +22,7 @@ with app.app_context():
 
     print("Creating Foods...")
     lasagna = Food(name="Lasagna", price="13.99", image="https://thestayathomechef.com/wp-content/uploads/2024/03/Most-Amazing-Lasagna_Square-2.jpg")
-    spaghetti = Food(name="Sphagetti", price="10.99", image="https://www.onceuponachef.com/images/2019/09/Spaghetti-and-Meatballs-1200x1554.jpg")
+    spaghetti = Food(name="Spaghetti", price="10.99", image="https://www.onceuponachef.com/images/2019/09/Spaghetti-and-Meatballs-1200x1554.jpg")
     ravioli = Food(name="Ravioli", price="11.99", image="https://www.thecountrycook.net/wp-content/uploads/2012/06/thumbnail-Baked-Ravioli-Casserole.png")
     meatball = Food(name="Meatballs", price="8.99", image="https://www.flavcity.com/wp-content/uploads/2018/06/meatballs-tomato-sauce.jpg")
     alfredo = Food(name="Chicken Alfredo", price="14.99", image="https://iwashyoudry.com/wp-content/uploads/2022/08/Chicken-Alfredo-Low-Res-21.jpg")
