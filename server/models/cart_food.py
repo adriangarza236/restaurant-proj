@@ -13,4 +13,4 @@ class CartFood(db.Model, SerializerMixin):
     food = db.relationship("Food", back_populates="cart_foods")
 
     def __repr__(self):
-        return f'<CartFood id={self.id}>'
+        return f'<CartFood id={self.id}, quantity={self.quantity}>'
