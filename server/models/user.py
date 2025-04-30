@@ -13,7 +13,7 @@ class User(db.Model, SerializerMixin):
     )
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.Integer, unique=True, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
 
     carts = db.relationship("Cart", back_populates="user", cascade="all, delete-orphan")

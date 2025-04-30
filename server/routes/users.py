@@ -17,15 +17,18 @@ def check_current_user():
     user_id = session.get("user_id")
     if user_id:
         user = User.query.get(user_id)
-        return make_response(
-            user.to_dict(),
-            200
+        if user:
+            return make_response(
+                user.to_dict(),
+                200
+                )
+        else:
+            return make_response(
+                {},
+                204
             )
     else:
-        return make_response(
-            {},
-            204
-        )
+        return make_response({}, 204)
     
 @app.route("/api/signup", methods=["POST"])
 def signup():

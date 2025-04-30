@@ -6,6 +6,7 @@ import { Card, CardMedia, CardContent, Typography, Button, Box } from "@mui/mate
 const FoodCards = ({ food, currentUser }) => {
     const { loggedIn } = useContext(UsersContext);
     const { addToCart, updateCartFood, cartFoods } = useContext(CartFoodsContext);
+    
 
     //defnining cartfoods that already exist in the users cart
     const existingCartFood = currentUser

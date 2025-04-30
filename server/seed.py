@@ -5,10 +5,10 @@ with app.app_context():
     print("Seeding Data...")
 
     print("Deleting...")
+    CartFood.query.delete()
+    Cart.query.delete()
     User.query.delete()
     Food.query.delete()
-    Cart.query.delete()
-    CartFood.query.delete()
 
     print("Creating Users...")
     kirby = User(email="kirby@testing.com")
