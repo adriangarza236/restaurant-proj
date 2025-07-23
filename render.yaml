@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: olive-lawn-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_SECRET_KEY
+      - key: DATABASE_URL
+
+  - type: web
+    name: olive-lawn-frontend
+    env: static
+    staticPublishPath: client/dist
+    buildCommand: cd client && npm install && npm run build
