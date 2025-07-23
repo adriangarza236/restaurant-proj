@@ -1,4 +1,3 @@
-from config import app
 from models.models import *
 from routes.routes import *
 from flask import Flask, render_template
