@@ -10,6 +10,11 @@ import os
 
 load_dotenv()
 
+class Config:
+    SECRET_KEY = os.getenv("FLASK_SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 naming_convention = {
     "ix": "ix_%(column_0_label)s",
     "uq": "uq_%(table_name)s_%(column_0_name)s",
@@ -18,25 +23,25 @@ naming_convention = {
     "pk": "pk_%(table_name)s",
 }
 
-metadata = MetaData(naming_convention=naming_convention)
+# metadata = MetaData(naming_convention=naming_convention)
 
-app = Flask(
-    __name__,
-    static_url_path='',
-    static_folder='../client/dist',
-    template_folder='../client/dist'
-    )
-app.secret_key = os.getenv("FLASK_SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# app = Flask(
+#     __name__,
+#     static_url_path='',
+#     static_folder='../client/dist',
+#     template_folder='../client/dist'
+#     )
+# app.secret_key = os.getenv("FLASK_SECRET_KEY")
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
-db = SQLAlchemy(app=app, metadata=metadata)
+# db = SQLAlchemy(app=app, metadata=metadata)
 
-migrate = Migrate(app=app, db=db)
+# migrate = Migrate(app=app, db=db)
 
-bcrypt = Bcrypt(app=app)
+# bcrypt = Bcrypt(app=app)
 
-api = Api(app=app)
+# api = Api(app=app)
 
-CORS(app)
+# CORS(app)
