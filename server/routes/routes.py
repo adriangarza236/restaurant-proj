@@ -1,4 +1,4 @@
-from config import app
+from app import app
 from flask import request, g
 from models.models import *
 from .helpers import *

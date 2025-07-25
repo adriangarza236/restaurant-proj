@@ -1,5 +1,6 @@
 from flask import make_response, request
-from config import app, db
+from extensions import db
+from app import app
 from models.models import CartFood
 
 @app.route("/api/cart_foods", methods=["GET", "POST"])

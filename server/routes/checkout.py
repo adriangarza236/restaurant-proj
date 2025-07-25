@@ -1,5 +1,6 @@
 from flask import request, jsonify
-from config import app, db
+from extensions import db
+from app import app
 import stripe
 import os
 from models.cart import Cart

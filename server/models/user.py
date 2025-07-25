@@ -1,4 +1,4 @@
-from config import db, bcrypt
+from extensions import db, bcrypt
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property

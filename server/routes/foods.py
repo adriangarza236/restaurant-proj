@@ -1,5 +1,5 @@
 from flask import make_response
-from config import app
+from app import app
 from models.models import Food
 
 @app.route("/api/foods")

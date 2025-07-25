@@ -1,5 +1,6 @@
 from flask import make_response, request, session, jsonify
-from config import app, db
+from extensions import db
+from app import app
 from models.models import User
 from sqlalchemy.exc import IntegrityError
 

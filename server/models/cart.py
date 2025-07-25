@@ -1,4 +1,4 @@
-from config import db
+from extensions import db
 from sqlalchemy_serializer import SerializerMixin
 
 class Cart(db.Model, SerializerMixin):
