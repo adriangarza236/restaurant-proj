@@ -1,5 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_restful import Api
+from flask_cors import CORS
 
 db = SQLAlchemy()
-Bcrypt = Bcrypt()
+bcrypt = Bcrypt()
+api = Api()
+cors = CORS()
